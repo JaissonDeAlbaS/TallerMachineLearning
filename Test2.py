@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 """
 @author: Jaisson De Alba Santos
+Dataset: bank-full.csv
+Titulo: Test2
 """
 import numpy as np
 import pandas as pd

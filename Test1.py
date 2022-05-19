@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 """
 @author: Jaisson De Alba Santos
+Dataset: diabetes.csv
+Titulo: Test1
 """
 import numpy as np
 import pandas as pd
