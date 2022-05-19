@@ -121,3 +121,52 @@ print(f'accuracy de Test de Entrenamiento: {arbol.score(x_test, y_test)}')
 
 # Accuracy de Validación
 print(f'accuracy de Validación: {arbol.score(x_test_out, y_test_out)}')
+
+# REGRESIÓN LOGÍSTICA VALIDACIÓN CRUZADA
+kfold = KFold(n_splits=10)
+
+acc_scores_train_train = []
+acc_scores_test_train = []
+logreg = LogisticRegression(solver='lbfgs', max_iter = 7600)
+
+for train, test in kfold.split(x, y):
+    logreg.fit(x[train], y[train])
+    scores_train_train = logreg.score(x[train], y[train])
+    scores_test_train = logreg.score(x[test], y[test])
+    acc_scores_train_train.append(scores_train_train)
+    acc_scores_test_train.append(scores_test_train)
+    
+y_pred = logreg.predict(x_test_out)
+
+print('*'*50)
+print('Regresión Logística Validación cruzada')
+
+# Accuracy de Entrenamiento de Entrenamiento
+print(f'accuracy de Entrenamiento de Entrenamiento: {np.array(acc_scores_train_train).mean()}')
+
+# Accuracy de Test de Entrenamiento
+print(f'accuracy de Test de Entrenamiento: {np.array(acc_scores_test_train).mean()}')
+
+# Accuracy de Validación
+print(f'accuracy de Validación: {logreg.score(x_test_out, y_test_out)}')
+
+# MATRIZ DE CONFUSION
+print(f'Matriz de confusión: {confusion_matrix(y_test_out, y_pred)}')
+
+matriz_confusion = confusion_matrix(y_test_out, y_pred)
+plt.figure(figsize = (6, 6))
+sns.heatmap(matriz_confusion)
+plt.title("Mariz de confución: Diabetes")
+
+
+#Precisión del Modelo
+precision = precision_score(y_test_out, y_pred, average=None).mean()
+print(f'Precisión: {precision}')
+
+#Recall del Modelo
+recall = recall_score(y_test_out, y_pred, average=None).mean()
+print(f'Re-call: {recall}')
+
+#F1-Score del Modelo
+f1_score = f1_score(y_test_out, y_pred, average=None).mean()
+print(f'f1: {f1_score}')
